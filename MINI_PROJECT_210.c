@@ -1,172 +1,295 @@
-#include<stdio.h>
-#include<windows.h>
-#include<conio.h>
-#include<stdlib.h>
-int date, month, year, option, number, total1=0, total2=0, total3=0, total4=0, total5=0, total;char ch;float time;
-void car()
-{    
-FILE *car;   
-car = fopen("car image.txt", "r");    
-if(car==NULL)    
-{        
- printf("FILE DOES NOT EXIST!!!!");    
-} 
-   else   
-{        
-
-while(!feof(car))        
-{           
- ch = fgetc(car);            
- printf("%c", ch);       
-}   
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int bus_slot = 5, car_slot = 5, bike_slot = 20, auto_slot = 15;
+int earings = 0, bus_count = 0, car_count = 0, bike_count = 0, auto_count = 0;
+int index1 = 0, index2 = 0, index3 = 0;
+struct customer
+{
+    char customerName[10][20], date[10][13];
+    int vehicleNumber[10];
+} c_data;
+void print_receipt(int fees)
+{
+    //this function use to print receipt
+    printf("\nHere you receipt!\n");
+    printf("***************************************\n");
+    printf("Name: %s\n", c_data.customerName[index2]);
+    printf("Vehicle numebr: %d\n", c_data.vehicleNumber[index1]);
+    printf("Date: %s\n", c_data.date[index3]);
+    printf("Your name :%d\n", fees);
+    printf("***************************************\n");
 }
+void bus_park()
+{
+    //this function use to handle bus parking operations
+    int fees;
+    printf("Enter your name: ");
+    fflush(stdin);
+    gets(c_data.customerName[index2]);
+    printf("Enter vehicle number: ");
+    scanf("%d", &c_data.vehicleNumber[index1]);
+    printf("Enter today's date: ");
+    fflush(stdin);
+    gets(c_data.date[index3]);
+repeat:
+    printf("Please enter fees: ");
+    scanf("%d", &fees);
+    if (fees < 200 || fees > 200)
+    {
+        printf("Please enter valid amount");
+        goto repeat;
+    }
+    else
+    {
+        earings = earings + fees;
+        printf("Your payment is successfully done\n");
+    }
+    print_receipt(fees);
+    index1++;
+    index2++;
+    index3++;
+    bus_count++;
 }
-void park_details()
-{    
-FILE *details;    
-details = fopen("park details.txt", "r");    
-if(details==NULL)    
-{          
-printf("FILE DOES NOT EXIST!!!!");    
-}  
-else    
-{        
-while(!feof(details))       
-{           
-ch = fgetc(details);          
-printf("%c", ch);        
-}    
+void car_park()
+{
+    //this function use to handle car parking operations
+    int fees;
+    printf("Enter your name: ");
+    fflush(stdin);
+    gets(c_data.customerName[index2]);
+    printf("Enter vehicle number: ");
+    scanf("%d", &c_data.vehicleNumber[index1]);
+    printf("Enter today's date: ");
+    fflush(stdin);
+    gets(c_data.date[index3]);
+repeat:
+    printf("Enter parking fees: ");
+    scanf("%d", &fees);
+    if (fees < 150 || fees > 150)
+    {
+        printf("Please enter valid amount");
+        goto repeat;
+    }
+    else
+    {
+        earings = earings + fees;
+        printf("Your payment is successfully done\n");
+    }
+    print_receipt(fees);
+    index1++;
+    index2++;
+    index3++;
+    car_count++;
 }
-
+void bike_park()
+{
+    //this function use to handle bike parking operations
+    int fees;
+    printf("Enter your name: ");
+    fflush(stdin);
+    gets(c_data.customerName[index2]);
+    printf("Enter vehicle number: ");
+    scanf("%d", &c_data.vehicleNumber[index1]);
+    printf("Enter today's date: ");
+    fflush(stdin);
+    gets(c_data.date[index3]);
+repeat:
+    printf("Enter parking fees: ");
+    scanf("%d", &fees);
+    if (fees < 50 || fees > 50)
+    {
+        printf("Please enter valid amount");
+        goto repeat;
+    }
+    else
+    {
+        earings = earings + fees;
+        printf("Your payment is successfully done\n");
+    }
+    print_receipt(fees);
+    index1++;
+    index2++;
+    index3++;
+    bike_count++;
 }
-void menu()
-{    
-FILE *menu;    
-menu = fopen("park menu.txt", "r");    
-if(menu==NULL)    
-{ 
-       printf("FILE DOES NOT EXIST!!!!");    
-}    
-else    
-{        
-while(!feof(menu))        
-{            
-ch=fgetc(menu);            
-printf("%c", ch);        
-}    
+void auto_park()
+{
+    //this function use to handle auto parking operations
+    int fees;
+    printf("Enter your name: ");
+    fflush(stdin);
+    gets(c_data.customerName[index2]);
+    printf("Enter vehicle number: ");
+    scanf("%d", &c_data.vehicleNumber[index1]);
+    printf("Enter today's date: ");
+    fflush(stdin);
+    gets(c_data.date[index3]);
+repeat:
+    printf("Enter parking fees: ");
+    scanf("%d", &fees);
+    if (fees < 100 || fees > 100)
+    {
+        printf("Please enter valid amount");
+        goto repeat;
+    }
+    else
+    {
+        earings = earings + fees;
+        printf("Your payment is successfully done\n");
+    }
+    print_receipt(fees);
+    index1++;
+    index2++;
+    index3++;
+    auto_count++;
 }
+void park_vehicle()
+{
+    //this function use to handle parking operations
+    int choose;
+again:
+    printf("\n1.Bus                     2.Car\n");
+    printf("3.Bike                    4.Auto\n");
+    printf("Which vehicle you want to park: ");
+    scanf("%d", &choose);
+    switch (choose)
+    {
+    case 1:
+        if (bus_slot == 0)
+        {
+            printf("\nSorry! Bus parking slot is not available\n");
+        }
+        else
+        {
+            bus_park();
+            bus_slot--;
+        }
+        break;
+    case 2:
+        if (car_slot == 0)
+        {
+            printf("\nSorry! Car parking slot is not available\n");
+        }
+        else
+        {
+            car_park();
+            car_slot--;
+        }
+        break;
+    case 3:
+        if (bike_slot == 0)
+        {
+            printf("\nSorry! Bike parking slot is not available\n");
+        }
+        else
+        {
+            bike_park();
+            bike_slot--;
+        }
+        break;
+    case 4:
+        if (auto_slot == 0)
+        {
+            printf("\nSorry! Auto parking slot is not available\n");
+        }
+        else
+        {
+            auto_park();
+            auto_slot--;
+        }
+        break;
+    default:
+        printf("Invalid number try again\n");
+        goto again;
+    }
+}
+void check_vehicle()
+{
+    //This function use to check your vehicle is available or not
+    char customerName1[20], date1[13];
+    int vehicleNumber;
+    int i = 0, check1, check2, check3;
+    printf("\nPlease enter some details\n");
+    printf("Enter Name: ");
+    fflush(stdin);
+    gets(customerName1);
+    printf("Enter vehicle number: ");
+    scanf("%d", &vehicleNumber);
+    printf("Enter date: ");
+    fflush(stdin);
+    gets(date1);
+    while (1)
+    {
+        check1 = strcmp(customerName1, c_data.customerName[i]);
+        check3 = strcmp(date1, c_data.date[i]);
+        if (vehicleNumber == c_data.vehicleNumber[i])
+        {
+            check2 = 0;
+        }
+        if (check1 == 0 && check2 == 0 && check3 == 0)
+        {
+            printf("\nYour vehicle is available here\n");
+            break;
+        }
+        else
+        {
+            if (index1 == 9)
+            {
+                printf("\nSorry! your vehicle is not available here\n");
+                break;
+            }
+        }
+        i++;
+    }
+}
+void check_insight()
+{
+    //This function use to check parking insight
+    printf("\n*************Today's insight***************\n");
+    printf("Total earnings: %d\n", earings);
+    printf("Total Bus parked: %d\n", bus_count);
+    printf("Total Car parked: %d\n", car_count);
+    printf("Total Bike parked: %d\n", bike_count);
+    printf("Total Auto parked: %d\n", auto_count);
 }
 int main()
-{    
-system("CLS");    
-system("color 0A");
-FILE *details;    details = fopen("park details.txt", "a");
-printf("\n ENTER TODAYS DATE FOR CONTINUE ");    
-printf("\n\tENTER DAY: " );    
-scanf("%d", &date);   
-printf("\n\tENTER MONTH: ");   
-scanf("%d", &month);    
-printf("\n\tENTER YEAR: ");    
-scanf("%d", &year);
-fprintf(details, "\n\nDATE: %d-%d-%d", date, month, year);   
-fprintf(details, "\n---------------");    
-system("CLS");
-
-while(1)   
- {       
-  car();       
-  menu();     
-  printf("ENTER AN OPTION: ");  
-  scanf("%d", &option);     
-  FILE *details;   
-  details = fopen("park details.txt", "a");
-
-        switch(option)       
- {
-        case 1:      
-        printf(" ENTER TIME: ");     
-        scanf("%f", &time);        
-        printf(" ENTER REGISTRATION NUMBER: ");        
-        scanf("%d", &number);
-        total1 +=100;
-        fprintf(details, "\t\tBUS\t\t%.2f\t\t%d\t\t100\n", time, number);  
-        printf("SUCCESSFULLY ADDED!!!!");      
-        getch();        
-        system("CLS");        
-         break;
-
-        case 2:
-        printf(" ENTER TIME: ");          
-        scanf("%f", &time);         
-        printf(" ENTER REGISTRATION NUMBER: ");    
-        scanf("%d", &number);
-        total2+=80;      
-        fprintf(details, "\t\tTRUCK      \t\t%.2f\t\t%d\t\t80\n", time, number);    
-        printf("SUCCESSFULLY ADDED!!!!");        
-        getch();           
-        system("CLS");       
-        break;
-  
-        case 3:           
-        printf(" ENTER TIME: ");     
-        scanf("%f", &time);         
-        printf(" ENTER REGISTRATION NUMBER: ");     
-        scanf("%d", &number);
-        total3+=70;       
-        fprintf(details, "\t\tPRIVATE CAR\t\t%.2f\t\t%d\t\t70\n", time, number);            
-	    printf("SUCCESSFULLY ADDED!!!!");          
-	    getch();           
-	    system("CLS");           
-	    break;
-	    
-        case 4:  
-        printf(" ENTER TIME: ");  
-        scanf("%f", &time);    
-        printf(" ENTER REGISTRATION NUMBER: ");       
-        scanf("%d", &number);
-        total4+=60;           
-	 	fprintf(details, "\t\tMOTOR CYCLE\t\t%.2f\t\t%d\t\t60\n", time, number);    
-        printf("SUCCESSFULLY ADDED!!!!");     
-        getch();      
-        system("CLS");        
-   		break;
-
-        case 5:     
-        printf(" ENTER TIME: ");   
-        scanf("%f", &time);   
-        printf(" ENTER REGISTRATION NUMBER: ");   
-        scanf("%d", &number);
-        total5+=40;          
-        fprintf(details, "\t\tBY CYCLE\t\t%.2f\t\t%d\t\t40\n", time, number); 
-        printf("SUCCESSFULLY ADDED!!!!");        
-        getch();    
-        system("CLS");   
-        break;
-  
-        case 6:          
-        system("CLS");        
-        park_details();       
-        printf("\n\n\n\t\t\tPRESS ANY KEY TO BACK TO MAIN MENU....");
-        getch();   
-        system("CLS");   
-        break;
-  
-        case 7:          
-        total=total1+total2+total3+total4+total5;        
-        fprintf(details,"\t\t\t\t\t\t\t\t\t\t\t Total = %d",total);      
-        fprintf(details,"\n.....................................................................................................\n");
-        exit(0); 
-        break;
- 
-        default:         
-	    printf("INVALID INPUT!!!");      
-	    getch();    
-	    printf("\n\n\n\t\t\tPRESS ANY KEY TO BACK TO MAIN MENU....");         
-        system("CLS");     
-        break;
-        }
-
-    }
-
-    return 0;
+{
+    //This function use to handle start menu
+    int choose;
+    do
+    {
+        printf("\n*************Welcome to Shubhradip's' parking Lot**********\n");
+        printf("This is vehicle fees chart\n");
+        printf("Bus fees 200               Car fees 150\n");
+        printf("Bike fees 50               Auto fees 100\n");
+        printf("\nEnter 1 for park your vehicle\n");
+        printf("Enter 2 for check your vehicle\n");
+        printf("Enter 3 for show today insight\n");
+        printf("Enter 4 for exit\n");
+    again:
+        printf("Please choose any option: ");
+        scanf("%d", &choose);
+        switch (choose)
+        {
+        case 1:
+            park_vehicle();
+            break;
+        case 2:
+            check_vehicle();
+            break;
+        case 3:
+            check_insight();
+            break;
+        case 4:
+            printf("Thank you for using our parking stand\n");
+            exit(0);
+            break;
+        default:
+            printf("Invalid number try again\n");
+            goto again;
+            break;
+        }
+    } while (choose != 4);
+    return 0;
 }
